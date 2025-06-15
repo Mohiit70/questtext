@@ -1,1 +1,1 @@
-# MindsDB-Hacks
+# An AI-powered personalized feed of developer knowledge
