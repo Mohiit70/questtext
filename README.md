@@ -1,1 +1,2 @@
-# An AI-powered personalized feed of developer knowledge
+# Your Document Quest, Simplified
+
