@@ -1,2 +1,0 @@
-# Your Document Quest, Simplified
-

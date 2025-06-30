@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextSpark - Ignite Insights from Your Texts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .search-section, .upload-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .section-title {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: "🔍";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .upload-section .section-title::before {
+            content: "📁";
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input[type="text"]:focus,
+        .form-group input[type="file"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        
+        .flash-message {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .flash-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .flash-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .flash-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .results-section {
+            margin-top: 40px;
+        }
+        
+        .results-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        
+        .results-title::before {
+            content: "📊";
+            margin-right: 10px;
+        }
+        
+        .result-item {
+            background: white;
+            border: 1px solid #e1e5e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+        
+        .result-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .result-source {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .result-content {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .summary-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .summary-title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .summary-title::before {
+            content: "💡";
+            margin-right: 10px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e1e5e9;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .header p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ TextSpark</h1>
+            <p>Ignite Insights from Your Texts</p>
+        </div>
+        
+        <div class="content">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message flash-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <!-- Search Section -->
+            <div class="search-section">
+                <h2 class="section-title">Search Documents</h2>
+                <form method="POST" action="/">
+                    <div class="form-group">
+                        <label for="search">Search Query:</label>
+                        <input type="text" id="search" name="search" 
+                               placeholder="Enter your search query..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category (optional):</label>
+                        <input type="text" id="category" name="category" 
+                               placeholder="e.g., work, personal, research...">
+                    </div>
+                    <button type="submit" class="btn">🔍 Search</button>
+                </form>
+            </div>
+            
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <h2 class="section-title">Upload Document</h2>
+                <form method="POST" action="/upload" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="file">Select File:</label>
+                        <input type="file" id="file" name="file" 
+                               accept=".txt,.pdf" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="upload-category">Category:</label>
+                        <input type="text" id="upload-category" name="category" 
+                               placeholder="e.g., work, personal, research..." value="general">
+                    </div>
+                    <button type="submit" class="btn">📁 Upload Document</button>
+                </form>
+            </div>
+            
+            <!-- Results Section -->
+            {% if results %}
+                <div class="results-section">
+                    <h2 class="results-title">Search Results ({{ results|length }} found)</h2>
+                    {% for result in results %}
+                        <div class="result-item">
+                            <div class="result-source">
+                                📄 {{ result.metadata.source if result.metadata and result.metadata.source else 'Unknown Source' }}
+                            </div>
+                            <div class="result-content">
+                                {{ result.content[:300] }}{% if result.content|length > 300 %}...{% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                {% if summary %}
+                    <div class="summary-section">
+                        <h3 class="summary-title">Summary</h3>
+                        <p>{{ summary }}</p>
+                    </div>
+                {% endif %}
+            {% elif request.method == 'POST' %}
+                <div class="no-results">
+                    <p>No results found. Try different search terms or upload some documents first.</p>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="footer">
+            <p>TextSpark Web Interface - Part of the TextTrove CLI Suite</p>
+            <p><a href="/status" style="color: #667eea;">System Status</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextSpark - System Status</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .status-connected {
+            border-left-color: #28a745;
+        }
+        
+        .status-disconnected {
+            border-left-color: #dc3545;
+        }
+        
+        .status-label {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .status-value {
+            color: #666;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 System Status</h1>
+            <p>TextSpark Web Interface Status</p>
+        </div>
+        
+        <div class="status-item {{ 'status-connected' if status.mindsdb_connected else 'status-disconnected' }}">
+            <span class="status-label">MindsDB Connection:</span>
+            <span class="status-value">
+                {% if status.mindsdb_connected %}
+                    ✅ Connected
+                {% else %}
+                    ❌ Disconnected
+                {% endif %}
+            </span>
+        </div>
+        
+        <div class="status-item">
+            <span class="status-label">MindsDB URL:</span>
+            <span class="status-value">{{ status.mindsdb_url }}</span>
+        </div>
+        
+        <div class="status-item">
+            <span class="status-label">Knowledge Base Name:</span>
+            <span class="status-value">{{ status.kb_name }}</span>
+        </div>
+        
+        <div class="status-item">
+            <span class="status-label">Available Knowledge Bases:</span>
+            <span class="status-value">
+                {% if status.knowledge_bases %}
+                    {{ status.knowledge_bases|join(', ') }}
+                {% else %}
+                    None found
+                {% endif %}
+            </span>
+        </div>
+        
+        <div class="back-link">
+            <a href="/">← Back to TextSpark</a>
+        </div>
+    </div>
+</body>
+</html>
