@@ -1,0 +1,9 @@
+ai_provider: groq
+groq_api_key: "YOUR_GROQ_API_KEY"
+mindsdb_url: "http://127.0.0.1:47334"
+kb_name: "texttrove_kb"
+ollama_url: "http://localhost:11434"
+ollama_model: "llama3"
+embedding_model: "nomic-embed-text"
+embedding_provider: "ollama"
+huggingface_api_token: ""
